@@ -65,6 +65,5 @@ int main(){
         else wcifrado += wtexto[i];
     }
     wcout << wcifrado << endl;
-
     
 }
