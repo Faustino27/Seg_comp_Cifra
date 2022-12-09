@@ -1,4 +1,5 @@
 *.exe
 *.out
 a
+a.*
 main
