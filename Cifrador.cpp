@@ -12,7 +12,7 @@ int main(){
     "\\", "@", "*", "&", "%", "$", "#", "<", ">", "+", "_", "=", "§", "|", "º", "ª", 
     "°", "ç", "á", "à", "é", "è", "ó", "ò", "ì", "í", "ú", "ù", "â", "ô", "ê", "ã", 
     "õ", "ñ", "~", "^", "´", "`"};
-    wcout.imbue(locale(""));
+
     int tamanhoElementos = elementos.size();
     unordered_map<string, int> mp;
     for(int i = 0;i < tamanhoElementos;i++){
