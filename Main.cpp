@@ -15,7 +15,7 @@ int main() {
   std::cin >> mensagem;
   std::cout << "insira a chave: ";
   std::cin >> chave;
-
+  std::cout << mensagem.size();
   // depois perguntar se ele quer dar o proprio alfabeto
 
   Tabela tab(alfabeto);
@@ -27,4 +27,8 @@ int main() {
   std::cout << cript << std::endl;
   std::cout << "A sua mensagem descriptografada eh " << std::endl;
   std::cout << volta << std::endl;
+
+  Solver s(alfabeto);
+  s.solve(cript);
+  
 }
