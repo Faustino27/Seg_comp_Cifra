@@ -1,6 +1,7 @@
 #include <vector>
+#include <algorithm>
 #include <map>
-#include <pair>
+#include <utility>
 
 class Solver
 {
@@ -53,9 +54,9 @@ private:
     }
 
     std::vector<int> keysize() {
-        std::map<string, int> last;
+        std::map<std::string, int> last;
         std::vector<int> frequency(this->frequency_size), spacing, retorno; 
-        std::vector<pair<int,int>> possible;
+        std::vector<std::pair<int,int>> possible;
         std::string aux = this->cripto;
 
         for(int i = 0; i+2 < aux.size(); i++) {
@@ -77,8 +78,8 @@ private:
                     frequency[i]++; 
         }
 
-        for(int i = 1; i < frequency.size(); i++) 
-            possible.emplace(frequency[i], i);
+        for(int i = 2; i < frequency.size(); i++) 
+            possible.emplace_back(frequency[i], i);
 
         sort(possible.rbegin(), possible.rend());
 
@@ -116,8 +117,13 @@ public:
         // não sei se vai precisar das funções dessa classe, mas deixei ai caso precise
     }
 
-    Solver(std::string alfabeto, std::cripto, int frequency_size=100) {
+    Solver(std::string alfabeto, std::string cripto, int frequency_size=100) {
         this->frequency_size = frequency_size;
         this->cripto = cripto;
+    }
+
+    // teste
+    std::vector<int> testeKeysize() {
+        return this->keysize();
     }
 };
