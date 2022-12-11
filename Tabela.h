@@ -12,8 +12,7 @@ class Tabela {
 
   private:
     std::vector<std::string> tabela;
-    std::vector<int> indexOf; // fiquei agoniado e troquei
-    // std::map<char, int> indexOf; //  podemos trocar isso por um vector de 128 posicoes -> se sobrar tempo
+    std::vector<int> indexOf;
     std::string alfabeto = "abcdefghijklmnopqrstuvwxyz";
     int tamanho = 0;
 

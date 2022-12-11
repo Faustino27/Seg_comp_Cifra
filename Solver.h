@@ -7,7 +7,7 @@ private:
     {
         std::vector<int> resultado;
         int tamanho = cifrado.size();
-        int total = 0, maior = 0;
+        int total = 0;
         // vai compara texto cifrado com ele mesmo para ver quantas vezes um letra reaparece
         // e armazena isso em um vetor para ser usado mais tarde
         for (int i = 1; i < tamanho; i++)
@@ -19,12 +19,11 @@ private:
                     igual++;
             }
             total += igual;
-            maior = std::max(maior, igual);
             resultado.push_back(igual);
         }
         //std::cout << "total:" <<  total << "maior" << maior << "\n";
         //mudar os segundo valor que vamos usar como base
-        return {resultado, tamanho/total};
+        return {resultado, total/tamanho};
     }
 
     std::vector<int> frequenciaSpike(std::vector<int> ocorrencias, int media)
@@ -36,7 +35,7 @@ private:
         for (int i = 0; i < tamanho; i++)
         {
             std::cout << ocorrencias[i] << " ";
-            if(ocorrencias[i] >= media) frequencia.push_back(i);
+            if(ocorrencias[i] > media) frequencia.push_back(i);
         }
         return frequencia;
     }
