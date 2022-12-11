@@ -10,3 +10,5 @@ por exemplo esse "CriaTabela" acredito que tenha que ter um .h so para conter os
 Acho que podemos ver isso depois?
 
 acho que se for seguir um padrao, podemos inclusive criar um namespace.
+
+# FAUSTINO COLOCA OS TXT DESAFIOS AQUI POR FAVOR

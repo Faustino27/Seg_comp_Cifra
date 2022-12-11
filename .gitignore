@@ -4,3 +4,6 @@ a
 a.*
 main
 .vscode
+Main
+*.teste
+*.swp
