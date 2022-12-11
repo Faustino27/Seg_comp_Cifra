@@ -63,17 +63,24 @@ void solve(std::string arq, std::string alfabeto) {
 
   // usar aqui o decrypt/solver
   // a mensagem codificada esta guardada na variavel criptografia
+  Solver solver(alfabeto, criptografia, 100, 1);
+  std::vector<std::string> res = solver.solve();
 
-  use_mask(criptografia, mascara);
+  for(auto x : res){
+    use_mask(x, mascara);
+    std::cout <<"essa eh a mensagem apos colocar na mascara e ser quebrada sem a chave\n" << x << "\n\n\n\n";
+  }
 
-  std::cout << "essa eh a mensagem apos colocar na mascara" << std::endl;
-  std::cout << criptografia << std::endl;
+  // use_mask(criptografia, mascara);
+
+  // std::cout << "essa eh a mensagem apos colocar na mascara" << std::endl;
+  // std::cout << criptografia << std::endl;
 
 }
 
 int main(int argc, char *argv[]) {
 
-  std::string mensagem;
+  std::string mensagem, cripto;
   std::string chave;
   std::string alfabeto = "abcdefghijklmnopqrstuvwxyz";
 
@@ -89,8 +96,10 @@ int main(int argc, char *argv[]) {
   // depois perguntar se ele quer dar o proprio alfabeto
   */
   Tabela tab(alfabeto);
+  tab.coder(mensagem, chave);
 
-  std::string cript = solve(argv[1], alfabeto);//tab.coder(mensagem, chave);
+
+  solve(argv[1], alfabeto);
   /*
   std::string volta = tab.decoder(cript, chave);
 
@@ -99,10 +108,6 @@ int main(int argc, char *argv[]) {
   std::cout << "A sua mensagem descriptografada eh " << std::endl;
   std::cout << volta << std::endl;
   */
-
-  Solver s(alfabeto, cript);
-  auto a = s.testeKeysize();
-  for(auto it: a) std::cout << it << ' '; std::cout << std::endl;
 //  s.solve(cript);
   
 }
