@@ -5,24 +5,81 @@
 #include "Cifrador.h"
 #include "Solver.h"
 
+void parse(std::string& criptografia, std::string alfabeto) {
+  std::string s;
+  for(auto it: criptografia)
+    if(alfabeto.find(it) != std::string::npos) 
+      s += it;
+
+  criptografia = s;
+}
+
+void mask(std::string& mask, std::string alfabeto) {
+  std::string s;
+  for(auto it: mask) {
+    if(alfabeto.find(it) != std::string::npos)
+      s += 'A';
+    else
+      s += it;
+  }
+
+  mask = s;
+}
+
+void use_mask(std::string& cript, std::string& mask) {
+
+  int idx = 0;
+  for(int i = 0; i < mask.size(); i++) {
+    if(mask[i] == 'A') mask[i] = cript[idx++];
+  } 
+
+  cript = mask;
+
+}
+
+void solve(std::string arq) {
+
+  std::string criptografia = "", auxiliar, mascara;
+
+  std::fstream arquivo;
+  arquivo.open(arq, std::ios::in);
+
+  if(!arquivo) {
+    std::cout << "arquivo nao existe!" << std::endl;
+  }else {
+    while(getline(arquivo, auxiliar)) criptografia += auxiliar + "\n";
+    arquivo.close();
+
+    mascara = criptografia;
+  }
+
+  parse(criptografia, alfabeto);
+  mask(mascara, alfabeto);
+
+  std::cout << "essa eh a mensagem criptografada apos retirar os caracteres fora do alfabeto" << std::endl;
+  std::cout << criptografia << std::endl;
+  std::cout << "essa eh a mensagem com mascara" << std::endl;
+  std::cout << mascara << std::endl;
+
+  // usar aqui o decrypt/solver
+  // a mensagem codificada esta guardada na variavel criptografia
+
+  use_mask(criptografia, mascara);
+
+  std::cout << "essa eh a mensagem apos colocar na mascara" << std::endl;
+  std::cout << criptografia << std::endl;
+
+
+}
+
 int main(int argc, char *argv[]) {
 
   std::string mensagem;
   std::string chave;
   std::string alfabeto = "abcdefghijklmnopqrstuvwxyz";
 
-  std::string criptografia = "", auxiliar;
-
-  std::fstream arquivo;
-  arquivo.open(argv[1], std::ios::in);
-
-  if(!arquivo) {
-    std::cout << "arquivo nao existe!" << std::endl;
-  }else {
-    while(getline(arquivo, auxiliar)) criptografia += auxiliar + "\n";
-
-    arquivo.close();
-  }
+  // descomente a linha debaixo para descriptar sem a chave
+  // solve(argv[1]);
 
   std::cout << "insira a mensagem a ser cifrada: ";
   std::cin >> mensagem;
