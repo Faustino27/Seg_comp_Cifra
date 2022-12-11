@@ -37,7 +37,7 @@ void use_mask(std::string& cript, std::string& mask) {
 
 }
 
-void solve(std::string arq) {
+void solve(std::string arq, std::string alfabeto) {
 
   std::string criptografia = "", auxiliar, mascara;
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
   std::string alfabeto = "abcdefghijklmnopqrstuvwxyz";
 
   // descomente a linha debaixo para descriptar sem a chave
-  // solve(argv[1]);
+  // solve(argv[1], alfabeto);
 
   std::cout << "insira a mensagem a ser cifrada: ";
   std::cin >> mensagem;
