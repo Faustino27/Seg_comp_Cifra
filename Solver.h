@@ -1,7 +1,12 @@
 #include <vector>
+#include <algorithm>
+#include <map>
+#include <utility>
 
 class Solver{
 private:
+    int frequency_size = 100;
+    std::string cripto;
     std::vector<double> en = {0.08167,0.01492,0.02782,0.04253,0.12702, 0.02228, 0.02015,
     0.06094, 0.06966, 0.00153,0.00772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095,
     0.05987, 0.06327, 0.09056, 0.02758, 0.0097, 0.02360, 0.00150, 0.01974, 0.00074};
@@ -76,6 +81,41 @@ private:
         return res;
     }
 
+    std::vector<int> keysize() {
+        std::map<std::string, int> last;
+        std::vector<int> frequency(this->frequency_size), spacing, retorno; 
+        std::vector<std::pair<int,int>> possible;
+        std::string aux = this->cripto;
+
+        for(int i = 0; i+2 < aux.size(); i++) {
+          
+            std::string triplet = aux.substr(i, 3);
+            if(last.find(triplet) == last.end()) 
+              last[triplet] = i;
+            else {
+                spacing.push_back(i-last[triplet]);
+                last[triplet] = i;
+            }
+        }
+
+        while(spacing.size()) {
+            auto num = spacing.back(); spacing.pop_back();
+
+            for(int i = 1; i < frequency.size(); i++) 
+                if(num%i == 0) 
+                    frequency[i]++; 
+        }
+
+        for(int i = 2; i < frequency.size(); i++) 
+            possible.emplace_back(frequency[i], i);
+
+        sort(possible.rbegin(), possible.rend());
+
+        for(auto [a, b]: possible)
+            retorno.emplace_back(b);
+
+        return retorno;
+    }
 public:
     // Solver
     std::string solve(std::string cifrado){
@@ -99,5 +139,15 @@ public:
     Solver(std::string alfabeto){
         Tabela cifra(alfabeto);
         // não sei se vai precisar das funções dessa classe, mas deixei ai caso precise
+    }
+
+    Solver(std::string alfabeto, std::string cripto, int frequency_size=100) {
+        this->frequency_size = frequency_size;
+        this->cripto = cripto;
+    }
+
+    // teste
+    std::vector<int> testeKeysize() {
+        return this->keysize();
     }
 };

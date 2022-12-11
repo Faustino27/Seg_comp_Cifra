@@ -69,7 +69,6 @@ void solve(std::string arq, std::string alfabeto) {
   std::cout << "essa eh a mensagem apos colocar na mascara" << std::endl;
   std::cout << criptografia << std::endl;
 
-
 }
 
 int main(int argc, char *argv[]) {
@@ -81,24 +80,29 @@ int main(int argc, char *argv[]) {
   // descomente a linha debaixo para descriptar sem a chave
   // solve(argv[1], alfabeto);
 
+  /*
   std::cout << "insira a mensagem a ser cifrada: ";
   std::cin >> mensagem;
   std::cout << "insira a chave: ";
   std::cin >> chave;
   std::cout << mensagem.size();
   // depois perguntar se ele quer dar o proprio alfabeto
-
+  */
   Tabela tab(alfabeto);
 
-  std::string cript = tab.coder(mensagem, chave);
+  std::string cript = solve(argv[1], alfabeto);//tab.coder(mensagem, chave);
+  /*
   std::string volta = tab.decoder(cript, chave);
 
   std::cout << "A sua mensagem criptografada eh " << std::endl;
   std::cout << cript << std::endl;
   std::cout << "A sua mensagem descriptografada eh " << std::endl;
   std::cout << volta << std::endl;
+  */
 
-  Solver s(alfabeto);
-  s.solve(cript);
+  Solver s(alfabeto, cript);
+  auto a = s.testeKeysize();
+  for(auto it: a) std::cout << it << ' '; std::cout << std::endl;
+//  s.solve(cript);
   
 }
