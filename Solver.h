@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <map>
 #include <utility>
+#include <deque>
 
 class Solver{
 private:
@@ -16,7 +17,7 @@ private:
     0.0128, 0.0618, 0.0040, 0.0002, 0.0278, 0.0474, 0.0505,0.1073, 0.0252, 0.0120,
     0.0653, 0.0781, 0.0434, 0.0463, 0.0167, 0.0001, 0.0021, 0.0001, 0.0047};
 
-    std::string compute(int tChave){
+    std::string compute(int tChave){        
         std::string res = "";
         for(int t = 0;t < tChave;t++){
             std::vector<int> letras(26,0);
@@ -25,25 +26,33 @@ private:
                 letras[cripto[i]-'a']++;
                 total++;
             }
-            std::vector<double> frequenciaCifrado;
+            std::deque<double> frequenciaCifrado;
             for(int i = 0;i < letras.size();i++){
-                frequenciaCifrado.push_back((letras[i]/(double)total));
+                frequenciaCifrado.push_back((letras[i]/(double)26));
             }
 
             std::vector<double> frequenciaAlfabeto = pt; 
             if(this->lingua)frequenciaAlfabeto = en;
+
             double maior = 0.0;
             int shift = 0, tFreq= frequenciaAlfabeto.size();
             for(int i = 0;i < tFreq;i++){
                 double multi = 0.0;
+                for(int j = 0; j < 26; j++) {
+                  multi += frequenciaAlfabeto[j] * frequenciaCifrado[j];
+                }
+                /*
                 for(int j = tFreq-1;j>=0;j--){
                     multi += frequenciaAlfabeto[(j+i)%tFreq]*frequenciaCifrado[j];
                 }
+                */
 
                 if(multi > maior){
                     maior = multi;
                     shift = i;
                 }
+                frequenciaCifrado.push_back(frequenciaCifrado.front());
+                frequenciaCifrado.pop_front();
             }
 
             res += 'a'+shift;
@@ -88,21 +97,25 @@ private:
     }
 public:
     // Solver
-    std::vector<std::string> solve(){
+    std::vector<std::pair<std::string, std::string>> solve(){
         std::vector<std::string> possibleKeys, possibleTexts;
+        std::vector<std::pair<std::string, std::string>> possible;
         std::vector<int> sizeKeys = keysize();
         for(int i = 0;i < sizeKeys.size() and i <=3;i++){
             possibleKeys.push_back(compute(sizeKeys[i]));
         }
-        for(auto s: possibleKeys){
-            std::cout << "POSSIBLE KEYS: " << s << "\n";
+        /*
+        for(const std::string& key: possibleKeys){
+            std::cout << "POSSIBLE KEYS: " << key << "\n";
         }
+        */
 
 
-        for(auto key: possibleKeys){
+        for(const std::string& key: possibleKeys){
+            possible.emplace_back(key, cifra.decoder(cripto, key));
             possibleTexts.push_back(cifra.decoder(cripto, key));
         }
-        return possibleTexts;
+        return possible;
         
     }
 

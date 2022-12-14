@@ -15,7 +15,7 @@ void parse(std::string& criptografia, std::string alfabeto) {
 }
 
 void mask(std::string& mask, std::string alfabeto) {
-  std::string s;
+  std::string s="";
   for(auto it: mask) {
     if(alfabeto.find(it) != std::string::npos)
       s += 'A';
@@ -26,7 +26,7 @@ void mask(std::string& mask, std::string alfabeto) {
   mask = s;
 }
 
-void use_mask(std::string& cript, std::string& mask) {
+void use_mask(std::string& cript, std::string mask) {
 
   int idx = 0;
   for(int i = 0; i < mask.size(); i++) {
@@ -56,19 +56,22 @@ void solve(std::string arq, std::string alfabeto) {
   parse(criptografia, alfabeto);
   mask(mascara, alfabeto);
 
+  /*
   std::cout << "essa eh a mensagem criptografada apos retirar os caracteres fora do alfabeto" << std::endl;
   std::cout << criptografia << std::endl;
   std::cout << "essa eh a mensagem com mascara" << std::endl;
   std::cout << mascara << std::endl;
+  */
 
   // usar aqui o decrypt/solver
   // a mensagem codificada esta guardada na variavel criptografia
   Solver solver(alfabeto, criptografia, 100, 1);
-  std::vector<std::string> res = solver.solve();
+  std::vector<std::pair<std::string, std::string>> res = solver.solve();
 
-  for(auto x : res){
-    use_mask(x, mascara);
-    std::cout <<"essa eh a mensagem apos colocar na mascara e ser quebrada sem a chave\n" << x << "\n\n\n\n";
+  for(auto [key, msg] : res){
+    use_mask(msg, mascara);
+    std::cout << "o algoritmo encontrou essa chave " << key  << std::endl;
+    std::cout <<"essa eh a mensagem apos colocar na mascara e ser quebrada sem a chave\n" << msg << "\n\n\n\n";
   }
 
   // use_mask(criptografia, mascara);
@@ -95,9 +98,8 @@ int main(int argc, char *argv[]) {
   std::cout << mensagem.size();
   // depois perguntar se ele quer dar o proprio alfabeto
   */
-  Tabela tab(alfabeto);
-  tab.coder(mensagem, chave);
-
+  //Tabela tab(alfabeto);
+  //tab.coder(mensagem, chave);
 
   solve(argv[1], alfabeto);
   /*
