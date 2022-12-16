@@ -2,12 +2,7 @@
 #include <map>
 #include <string>
 
-// maybe change the name of this?
-// I dont think we need another class just to make the cypher
-// maybe call this class Cifra(?) or cypher
-// 1 question: why would we need the table? 
-// if this question is answered we might continue like that
-// otherwise I think we can make with only one class
+
 class Tabela {
 
   private:
@@ -40,21 +35,17 @@ class Tabela {
 
     }  
   
+    //criptografa dado q a letra original eh "a" e a letra da chave eh "b"
     char getEncrypt(char a, char b) {
-      // i dont think we need the real table here
-      // we can just calculate the value of each cell
       int idA = this->indexOf[a];
       int idB = this->indexOf[b];
       if(idA == -1 || idB == -1) {
         std::cout << "letra nao pertencente ao alfabeto!" << std::endl;
         exit(1);
       }return this->alfabeto[(idA+idB)%this->tamanho];
-      // deixar a tabela explicita caso o faustino ainda queira
-      // return this->tabela[this->indexOf[a]][this->indexOf[b]];
     }
 
-    // char a is the key
-    // char b is the encrypted message
+    //cdesriptografa dado q a letra cifrada eh "a" e a letra da chave eh "b"
     char getDecrypt(char a, char b) {
       int idA = this->indexOf[a];
       int idB = this->indexOf[b];
@@ -65,6 +56,7 @@ class Tabela {
       return this->alfabeto[(idB-idA+this->tamanho)%this->tamanho]; 
     }
 
+    //normaliza a chave, deixando ela do tamanho do texto a ser cifrado
     void normalizeKey(std::string& text, std::string& key) {
       std::string copyKey = key;
       while(key.size() < text.size()) 
@@ -74,7 +66,7 @@ class Tabela {
     }
     
   public:
-
+  //construtores
     Tabela() {
       init();
     }
