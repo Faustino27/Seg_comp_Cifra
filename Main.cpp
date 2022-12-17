@@ -9,9 +9,11 @@
 //remove os espacos do input e pontuacao
 void parse(std::string& criptografia, std::string alfabeto) {
   std::string s;
-  for(auto it: criptografia)
+  for(auto it: criptografia){
+    it =  tolower(it);
     if(alfabeto.find(it) != std::string::npos) 
       s += it;
+  }
 
   criptografia = s;
 }
@@ -39,39 +41,6 @@ void use_mask(std::string& cript, std::string mask) {
   cript = mask;
 
 }
-
-void solve(std::string arq, std::string alfabeto) {
-
-  std::string criptografia = "", auxiliar, mascara;
-
-  std::fstream arquivo;
-  arquivo.open(arq, std::ios::in);
-
-  if(!arquivo) {
-    std::cout << "O arquivo nao existe!" << std::endl;
-  }else {
-    while(getline(arquivo, auxiliar)) criptografia += auxiliar + "\n";
-    arquivo.close();
-    criptografia = 
-    mascara = criptografia;
-  }
-
-  parse(criptografia, alfabeto);
-  mask(mascara, alfabeto);
-
-  // usar aqui o decrypt/solver
-  // a mensagem codificada esta guardada na variavel criptografia
-  Solver solver(alfabeto, criptografia, 100, 1);
-  std::vector<std::pair<std::string, std::string>> res = solver.solve();
-
-  for(auto [key, msg] : res){
-    use_mask(msg, mascara);
-    std::cout << "o algoritmo encontrou essa chave " << key  << std::endl;
-    std::cout <<"essa eh a mensagem apos colocar na mascara e ser quebrada sem a chave\n" << msg << "\n\n\n\n";
-  }
-
-}
-
 
 void criptografa(std::string alfabeto){
   std::string arq = "";
@@ -228,8 +197,5 @@ int main(int argc, char *argv[]) {
     else system("clear");
   }
 
-
-
-  //solve(argv[1], alfabeto);
   
 }

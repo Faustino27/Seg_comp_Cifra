@@ -1,9 +1,12 @@
 *.exe
 *.out
 a
+testeD.txt
 a.*
 main
 .vscode
 Main
 *.teste
 *.swp
+testeC.txt
+run
